@@ -35,7 +35,7 @@ Rapsberry Pi(Client)と管理サーバー(server)の双方において
 $ git clone git@github.com:Aki-7/pcap-transfer.git
 $ cd pcap-transfer
 $ git checkout cert
-# 秘密鍵に対するパスワードを設定する(option)
+# 秘密鍵に対するパスワードを設定する(option)
 $ vim passwd
 # host名を設定する。
 $ vim create_certs.sh # 1行目を編集
@@ -56,7 +56,7 @@ $ vim server.py # 26行目 "localhost" -> "0.0.0.0"
 $ git clone git@github.com:Aki-7/pcap-transfer.git
 $ cd pcap-transfer
 $ git checkout cert
-# 秘密鍵に対するパスワードを設定する server側の設定と同じにしてください(簡単のためです)
+# 秘密鍵に対するパスワードを設定する server側の設定と同じにしてください(簡単のためです)
 $ vim passwd
 $ vim client.sh # 6行目を編集
 
