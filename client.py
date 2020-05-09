@@ -29,3 +29,5 @@ conn = context.wrap_socket(
 conn.connect((hostname, 5000))
 
 conn.send(b"success!")
+
+conn.close()

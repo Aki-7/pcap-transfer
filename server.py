@@ -30,7 +30,9 @@ socket.listen(5)
 def deal_with_client(connstream):
     data = connstream.read()
     while data:
-        print(data)
+        print(data.decode())
+        if data == b'success!':
+            return True
         data = connstream.read()
 
 
@@ -38,6 +40,8 @@ while True:
     newsock, addr = socket.accept()
     connstream = context.wrap_socket(newsock, server_side=True)
     try:
-        deal_with_client(connstream)
+        if (deal_with_client(connstream)):
+            connstream.close()
+            break
     finally:
         connstream.close()

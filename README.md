@@ -19,6 +19,12 @@ Rapsberry Pi(Client)と管理サーバー(server)の双方において
 
 ### Demo Setup
 
+#### require
+
+`openssl`
+
+#### setup
+
 二つのホスト(server, client)を用意してください
 (同一ホストでlocalhostで通信でも大丈夫です。)
 
