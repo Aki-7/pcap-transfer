@@ -3,7 +3,8 @@ import socket
 import os
 from pathlib import Path
 
-hostname="localhost"
+hostname = "localhost"
+
 
 def passwd():
     with open("passwd", "r") as f:
@@ -27,4 +28,4 @@ conn = context.wrap_socket(
 
 conn.connect((hostname, 5000))
 
-conn.send(b"hello")
+conn.send(b"success!")
