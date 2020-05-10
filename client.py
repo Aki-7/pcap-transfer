@@ -1,6 +1,8 @@
 import ssl
 import socket
 import os
+import asyncio
+import websockets
 from pathlib import Path
 
 hostname = "localhost"
@@ -21,13 +23,16 @@ context.load_cert_chain(
     password=passwd,
 )
 
-conn = context.wrap_socket(
-    socket.socket(socket.AF_INET),
-    server_hostname=hostname
-)
 
-conn.connect((hostname, 5000))
+async def hello():
+    uri = "wss://localhost:5000"
+    async with websockets.connect(uri, ssl=context) as websocket:
+        name = input("What's your name? ")
 
-conn.send(b"success!")
+        await websocket.send(name)
+        print(f"> {name}")
 
-conn.close()
+        greeting = await websocket.recv()
+        print(f"< {greeting}")
+
+asyncio.get_event_loop().run_until_complete(hello())

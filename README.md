@@ -13,15 +13,17 @@ Rapsberry Pi(Client)と管理サーバー(server)の双方において
 
 以上を満たした上でsocketを用いて安全に通信したい。
 
-### TLSを用いた解決
+かつWebsocketを利用したい。
 
-今回は管理サーバが認証局の役割を果たし、Raspberry Piを配布する際にSDカードなどでserverで発行したRoot証明書をダウンロードし、それを用いてTLS socketを作成することで目的を達成する。
+### Websockets over TLSを用いた解決
+
+今回は管理サーバが認証局の役割を果たし、Raspberry Piを配布する際にSDカードなどでserverで発行したRoot証明書をダウンロードし、それを用いてTLS通信を行うことで目的を達成する。
 
 ### Demo Setup
 
 #### require
 
-`openssl`
+`openssl`, `python3`
 
 #### setup
 
@@ -35,8 +37,11 @@ Rapsberry Pi(Client)と管理サーバー(server)の双方において
 $ git clone git@github.com:Aki-7/pcap-transfer.git
 $ cd pcap-transfer
 $ git checkout cert
+# パッケージをインストール
+$ pip install -r requirements.txt
 # 秘密鍵に対するパスワードを設定する(option)
 $ vim passwd
+$
 # host名を設定する。
 $ vim create_certs.sh # 1行目を編集
 # 各種証明書などを発行 (certs/にすべて発行します)
@@ -56,6 +61,8 @@ $ vim server.py # 26行目 "localhost" -> "0.0.0.0"
 $ git clone git@github.com:Aki-7/pcap-transfer.git
 $ cd pcap-transfer
 $ git checkout cert
+# パッケージをインストール
+$ pip install -r requirements.txt
 # 秘密鍵に対するパスワードを設定する server側の設定と同じにしてください(簡単のためです)
 $ vim passwd
 $ vim client.sh # 6行目を編集

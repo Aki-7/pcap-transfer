@@ -1,6 +1,8 @@
 import socket
 import ssl
 import os
+import asyncio
+import websockets
 from pathlib import Path
 
 
@@ -22,26 +24,17 @@ context.load_cert_chain(
     password=passwd,
 )
 
-socket = socket.socket()
-socket.bind(("localhost", 5000))
-socket.listen(5)
 
+async def hello(websocket, path):
+    name = await websocket.recv()
+    print(f"< {name}")
 
-def deal_with_client(connstream):
-    data = connstream.read()
-    while data:
-        print(data.decode())
-        if data == b'success!':
-            return True
-        data = connstream.read()
+    greeting = f"Hello {name}!"
 
+    await websocket.send(greeting)
+    print(f"> {greeting}")
 
-while True:
-    newsock, addr = socket.accept()
-    connstream = context.wrap_socket(newsock, server_side=True)
-    try:
-        if (deal_with_client(connstream)):
-            connstream.close()
-            break
-    finally:
-        connstream.close()
+start_server = websockets.serve(hello, "localhost", 5000, ssl=context)
+
+asyncio.get_event_loop().run_until_complete(start_server)
+asyncio.get_event_loop().run_forever()
