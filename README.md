@@ -39,7 +39,7 @@ $ cd pcap-transfer
 $ git checkout cert
 # パッケージをインストール
 $ pip install -r requirements.txt
-# 秘密鍵に対するパスワードを設定する(option)
+# 秘密鍵に対するパスワードを設定する(option, 簡単のため全ての秘密鍵で共通)
 $ vim passwd
 $
 # host名を設定する。
@@ -48,8 +48,8 @@ $ vim create_certs.sh # 1行目を編集
 $ ./create_certs.sh
 
 # 以下localhost以外から接続する場合。
-# server.pyでlistenするホストを"0.0.0.0"に
-$ vim server.py # 26行目 "localhost" -> "0.0.0.0"
+# listenするホストを"0.0.0.0"に
+$ vim tsls_websockets_server.py # 59行目 server.run(host="0.0.0.0")
 
 # firewallを外すのも忘れずに(port 5000)
 ```
@@ -65,9 +65,9 @@ $ git checkout cert
 $ pip install -r requirements.txt
 # 秘密鍵に対するパスワードを設定する server側の設定と同じにしてください(簡単のためです)
 $ vim passwd
-$ vim client.sh # 6行目を編集
+# host名を設定する。(option)
+$ vim tls_websocketsclient.sh # 64行目 client.run(uri="wss://your.host:5000")
 
-# host名を設定する。
 # クライアントで必要なものをコピー
 # 任意の方法でserverホストにある
 # - certs/clt.pem
@@ -83,10 +83,10 @@ $ vim client.sh # 6行目を編集
 
 ```sh
 # server
-$ python server.py
+$ python tls_webscokets_server.py
 ```
 
 ```sh
 # client
-$ python client.py
+$ python tls_websockets_client.py
 ```
