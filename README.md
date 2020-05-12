@@ -23,7 +23,7 @@ Rapsberry Pi(Client)と管理サーバー(server)の双方において
 
 #### require
 
-`openssl`, `python3`
+`openssl`, `python3`, `tcpdump`
 
 #### setup
 
@@ -36,7 +36,6 @@ Rapsberry Pi(Client)と管理サーバー(server)の双方において
 # clone this repository
 $ git clone git@github.com:Aki-7/pcap-transfer.git
 $ cd pcap-transfer
-$ git checkout cert
 # パッケージをインストール
 $ pip install -r requirements.txt
 # 秘密鍵に対するパスワードを設定する(option, 簡単のため全ての秘密鍵で共通)
@@ -49,7 +48,7 @@ $ ./create_certs.sh
 
 # 以下localhost以外から接続する場合。
 # listenするホストを"0.0.0.0"に
-$ vim tsls_websockets_server.py # 59行目 server.run(host="0.0.0.0")
+$ vim server.py
 
 # firewallを外すのも忘れずに(port 5000)
 ```
@@ -60,15 +59,18 @@ $ vim tsls_websockets_server.py # 59行目 server.run(host="0.0.0.0")
 # clone this repository
 $ git clone git@github.com:Aki-7/pcap-transfer.git
 $ cd pcap-transfer
-$ git checkout cert
 # パッケージをインストール
 $ pip install -r requirements.txt
 # 秘密鍵に対するパスワードを設定する server側の設定と同じにしてください(簡単のためです)
 $ vim passwd
 # host名を設定する。(option)
-$ vim tls_websocketsclient.sh # 64行目 client.run(uri="wss://your.host:5000")
+$ vim node.py
 
-# クライアントで必要なものをコピー
+# serverに送信するpcap fileを用意する
+$ tcpdump -w input.pcap # and Ctrl-C
+# ソースコード(node.py)のファイル名を変えて他の形式のファイルを送ることもできます。
+
+# クライアントで必要な証明書などをコピー
 # 任意の方法でserverホストにある
 # - certs/clt.pem
 # - certs/clt.chain.pem
@@ -81,12 +83,14 @@ $ vim tls_websocketsclient.sh # 64行目 client.run(uri="wss://your.host:5000")
 
 ### Run
 
+client の `input.pcap` が Websockets over TLS で server に送られ、 `output.pcap` が生成される。
+
 ```sh
 # server
-$ python tls_webscokets_server.py
+$ python server.py
 ```
 
 ```sh
 # client
-$ python tls_websockets_client.py
+$ python node.py
 ```
