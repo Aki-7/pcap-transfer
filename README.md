@@ -83,7 +83,7 @@ $ tcpdump -w input.pcap # and Ctrl-C
 
 ### Run
 
-client の `input.pcap` が Websockets over TLS で server に送られ、 `output.pcap` が生成される。
+client の `input.pcap` が zip で固められてから Websockets over TLS で server に送られ、 `output.pcap.gz` が生成される。
 
 ```sh
 # server
