@@ -25,7 +25,7 @@ class Application:
                 if isinstance(buf, Exception):
                     raise buf
                 print(len(buf), "byte received")
-                with open("output.pcap", "wb") as f:
+                with open("output.pcap.gz", "wb") as f:
                     f.write(buf)
                 await sock.send("ok")
             except ConnectionClosedOK:

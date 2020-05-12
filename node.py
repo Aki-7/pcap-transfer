@@ -1,4 +1,5 @@
 import asyncio
+import gzip
 from tls_websockets import TLSWebsocketsClient
 from websockets import WebSocketClientProtocol
 from packet_dumper import PacketDumperFromSampleFile
@@ -26,7 +27,8 @@ class Application:
         self.wss_client.wait_session_closed()
 
     def handle_packet(self, packet):
-        self.__loop.run_until_complete(self.sock.send(packet))
+        zipped = gzip.compress(packet)
+        self.__loop.run_until_complete(self.sock.send(zipped))
 
     async def session(self, sock: WebSocketClientProtocol):
         self.sock = sock
