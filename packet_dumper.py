@@ -4,7 +4,7 @@ class PacketDumperFromSampleFile:
 
     def dump(self):
         while True:
-            packet = self.fd.readline()
+            packet = self.fd.read()
             if packet == b'':
                 break
             self.handle_packet(packet)
