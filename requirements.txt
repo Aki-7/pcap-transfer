@@ -1,2 +1,1 @@
-dpkt
-pypcap
+websockets
