@@ -61,7 +61,7 @@ $ git clone git@github.com:Aki-7/pcap-transfer.git
 $ cd pcap-transfer
 # パッケージをインストール
 $ pip install -r requirements.txt
-# 秘密鍵に対するパスワードを設定する server側の設定と同じにしてください(簡単のためです)
+# 秘密鍵に対するパスワードを設定する server側の設定と同じにしてください(簡単のためです)
 $ vim passwd
 # host名を設定する。(option)
 $ vim node.py
